@@ -1,14 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@/utils/useDebounce";
 import { GEO_API } from "@/utils/constants";
+import type { City } from "@/types/type";
 
-export interface City {
-  id: number;
-  name: string;
-  country: string;
-  latitude: number;
-  longitude: number;
-}
 
 const fetchCities = async (query: string): Promise<City[]> => {
   if (query.length < 2) return [];
@@ -43,13 +37,13 @@ const fetchCities = async (query: string): Promise<City[]> => {
 };
 
 export const useCityAutofill = (query: string) => {
-  const debouncedQuery = useDebounce(query, 500);
+  const debouncedQuery = useDebounce(query, 300);
 
   const { data: suggestions = [], isFetching } = useQuery({
     queryKey: ["cities", debouncedQuery],
     queryFn: () => fetchCities(debouncedQuery),
     enabled: debouncedQuery.length >= 2,
-    staleTime: 1000 * 60 * 20,
+    staleTime: 1000 * 60 * 10,
   });
 
   return {
