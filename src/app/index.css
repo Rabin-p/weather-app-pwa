@@ -129,5 +129,5 @@
 }
 
 .spacing{
-  @apply mb-6 sm:mb-4 lg:mb-8;
+  @apply mb-8 sm:mb-6 lg:mb-10;
 }
